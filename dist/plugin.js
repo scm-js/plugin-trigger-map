@@ -1239,6 +1239,7 @@ ${t("Written by {w}, read or used by {r}", { w: thing.producers.length, r: thing
 function clip(text, max) {
   return text.length > max ? `${text.slice(0, max - 1)}\u2026` : text;
 }
+var msg = (text) => text;
 function activate(api) {
   api.i18n.register({ ko: KO });
   const app = new TriggerMap(api);
@@ -1252,7 +1253,7 @@ function activate(api) {
       app.open(key);
     }
   });
-  api.menu.add("Triggers", { label: t("Trigger Map\u2026"), command: "open" });
+  api.menu.add("Triggers", { label: msg("Trigger Map\u2026"), command: "open" });
   api.ui.dialogSlot("triggerEditor", {
     mount(body, dlg) {
       body.append(api.ui.widgets.button(t("Show in Trigger Map"), {

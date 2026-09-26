@@ -832,6 +832,9 @@ function clip(text: string, max: number): string {
 
 /* ── Activation ─────────────────────────────────────────── */
 
+/** A menu label: English, which is how the menu knows the item; the editor shows it through `KO`. */
+const msg = (text: string) => text;
+
 export default function activate(api: PluginApi): () => void {
   api.i18n.register({ ko: KO });
   const app = new TriggerMap(api);
@@ -847,7 +850,7 @@ export default function activate(api: PluginApi): () => void {
       app.open(key);
     },
   });
-  api.menu.add("Triggers", { label: t("Trigger Map…"), command: "open" });
+  api.menu.add("Triggers", { label: msg("Trigger Map…"), command: "open" });
 
   // From the Trigger Editor: the selected row, after asking if closing would lose changes.
   api.ui.dialogSlot("triggerEditor", {

@@ -4,7 +4,7 @@ import { KO } from "../ko";
 
 // Every literal the plugin shows through `t("…")`, read from the source the way the editor's own extractor reads it.
 const sources = ["plugin.ts", "describe.ts"].map((f) => readFileSync(new URL(`../${f}`, import.meta.url), "utf8"));
-const keys = new Set(sources.flatMap((source) => [...source.matchAll(/\bt\("((?:[^"\\]|\\.)*)"/g)].map((m) => JSON.parse(`"${m[1]}"`) as string)));
+const keys = new Set(sources.flatMap((source) => [...source.matchAll(/\b(?:t|msg)\("((?:[^"\\]|\\.)*)"/g)].map((m) => JSON.parse(`"${m[1]}"`) as string)));
 
 /** The placeholders a string fills: `{name}`, `{n, plural, …}`, `{name|을}` — not the words inside a plural's branches. */
 const names = (s: string) => new Set([...s.matchAll(/\{(\w+)(?=[},|])/g)].map((m) => m[1]));
