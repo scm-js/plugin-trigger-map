@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30">
+  <!-- Three triggers joined through a switch: one sets it, two read it. -->
+  <path d="M9 15 C13 15 12 15 15 15 M15 15 C18 15 18 8 21 8 M15 15 C18 15 18 22 21 22" fill="none" stroke="#99a2b3" stroke-width="1.6"/>
+  <rect x="2" y="11" width="8" height="8" rx="2" fill="#e6b95c"/>
+  <circle cx="15" cy="15" r="3.2" fill="#4fd1c5"/>
+  <rect x="20" y="4" width="8" height="8" rx="2" fill="#e6b95c"/>
+  <rect x="20" y="18" width="8" height="8" rx="2" fill="#e6b95c"/>
+</svg>
