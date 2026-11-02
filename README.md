@@ -1,46 +1,53 @@
 # Trigger Map
 
-A plugin for [scmJS](https://github.com/scm-js/scm-js), the browser-based StarCraft 1 /
-Brood War map editor. It shows a map's triggers as a graph you can walk through, and lists
-the places where they do not fit together.
+A plugin for [scmJS](https://scmjs.dev/editor/), the StarCraft and Brood War map editor that
+runs in the browser. It shows a map's triggers as a graph you can walk through, and lists the
+places where they do not fit together.
 
-Triggers talk to each other through shared things: one trigger sets a switch and another
-waits for it, one adds to a death counter and another checks it, one moves a location and
-another creates units there. The Trigger Editor shows one trigger at a time. Trigger Map
-shows those connections: pick a trigger to see what it waits for and what it changes, or
-pick a switch to see every trigger that sets it and every trigger that reads it.
+Triggers affect each other through things they share. One trigger sets a switch and another
+waits for it. One adds to a death counter and another checks it. One moves a location and
+another creates units there. The Trigger Editor shows one trigger at a time, and Trigger Map
+shows these connections. Pick a trigger to see what it waits for and what it changes. Pick a
+switch to see every trigger that sets it and every trigger that reads it.
 
-It needs scmJS with `api.triggers.references`, which came after 0.5.0.
+It needs scmJS 0.6.0 or later.
 
 ## Install
 
-In scmJS: **Plugins ▸ Browse Plugins…** lists Trigger Map; press **Install**. Or open
+In scmJS, open **Plugins ▸ Browse Plugins…** and press **Install** next to Trigger Map. Or open
 **Plugins ▸ Manage Plugins…**, paste
 
 ```
 https://github.com/scm-js/plugin-trigger-map
 ```
 
-and press **Add**. To pin a version, add a ref: `github:scm-js/plugin-trigger-map@v0.1.0`.
+and press **Add**. To pin a version, add a tag: `github:scm-js/plugin-trigger-map@v0.1.1`.
 
 ## Use
 
 Open it with **Triggers ▸ Trigger Map…**. You can also get to it from:
 
-- **The Trigger Editor.** **Show in Trigger Map** at the bottom closes the editor and
+- The Trigger Editor: **Show in Trigger Map** at the bottom closes the editor and
   shows the selected trigger. If you have changes you have not applied, it asks first.
-- **The map.** On the Locations layer, right-click a location and choose **Triggers using
-  "…"**. On the Units layer, right-click a unit whose type a trigger mentions and choose
-  **Triggers about …**.
+- The map: on the Locations layer, right-click a location and choose **Triggers using**
+  followed by its name. On the Units layer, right-click a unit whose type a trigger mentions
+  and choose **Triggers about** followed by the unit's name.
 
 ### The list
 
-**Everything** lists the triggers, then what they use, grouped by kind: switches, death
-counters, memory addresses (EUD), the countdown timer, ore and gas, scores, units,
-locations, game endings, text, sounds, AI scripts and unit property slots. The numbers
-beside each row are how many triggers write it → how many read or use it. For a trigger,
-they are how many things it reads → how many it writes. The box at the top searches every
-group. Click a row to show it in the graph.
+**Everything** lists the triggers, then what they use, grouped by kind:
+
+- switches and death counters
+- memory addresses (EUD)
+- the countdown timer, ore and gas, and scores
+- units and locations
+- game endings
+- text, sounds and AI scripts
+- unit property slots
+
+The numbers beside each row are how many triggers write it → how many read or use it. For a
+trigger, they are how many things it reads → how many it writes. The box at the top searches
+every group. Click a row to show it in the graph.
 
 A trigger is named by its Comment action if it has one, otherwise by its conditions.
 
@@ -48,16 +55,18 @@ A trigger is named by its Comment action if it has one, otherwise by its conditi
 
 The graph has five columns, and things happen from left to right.
 
-- **For a trigger**: the triggers that set up what it waits for, then what it waits for,
-  then **the trigger**, then what it changes, then the triggers that read those changes.
-- **For a switch, counter, location or anything else**: what the writing triggers wait
-  for, then the triggers that write it, then **it**, then the triggers that read or use
+- For a trigger: the triggers that set up what it waits for, then what it waits for,
+  then the trigger itself, then what it changes, then the triggers that read those changes.
+- For a switch, counter, location or anything else: what the writing triggers wait for,
+  then the triggers that write it, then the item itself, then the triggers that read or use
   it, then what those triggers change.
 
-Gold edges are writes (Set Switch, Set Deaths, Create Unit, Victory). Grey edges are
-reads (a condition). Dashed edges are uses, where an action names something without
-changing it, such as the location units are created at or the text a message shows. The
-edges next to the focus say what they do: *is set*, *≥ 3*, *+ 500 · P1–P8*, *Create
+- Gold edges are writes (Set Switch, Set Deaths, Create Unit, Victory).
+- Grey edges are reads (a condition).
+- Dashed edges are uses, where an action names something without changing it, such as the
+  location units are created at or the text a message shows.
+
+The edges next to the focus say what they do: *is set*, *≥ 3*, *+ 500 · P1–P8*, *Create
 Unit*. Hover over any edge for the same text, and over a node to light up its edges.
 
 Click a node to move to it. **◀** and **▶** go back and forward, and the trail beside
@@ -95,7 +104,7 @@ The **Findings** tab lists what looks wrong. Click one to show it in the graph.
 | A trigger is disabled, has no players, or has a Never condition | It never fires. |
 
 Only switches and the countdown timer are checked for "read but never written". Death
-counts, units, ore and scores also change during play: a unit dies, a worker mines. A
+counts, units, ore and scores also change during play, when a unit dies or a worker mines. A
 condition on those can be true without any trigger touching them.
 
 A writer that never runs does not count. If the only trigger that sets a switch is
@@ -151,7 +160,7 @@ The editor does the reading. `api.triggers.references()` says what each conditio
 action reads, writes or uses, with player groups resolved. `view.goTo({ kind: "trigger",
 index })` opens the Trigger Editor on a trigger, and the Trigger Editor lends its
 `selected` and `modified` fields to plugin buttons. All of these are described in the
-editor's [plugin guide](https://github.com/scm-js/scm-js/blob/main/docs/plugins.md).
+editor's [plugin guide](https://docs.scmjs.dev/plugins/).
 
 ## Licence
 
